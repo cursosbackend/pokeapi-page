@@ -109,7 +109,23 @@ O si no usas Procfile, poner en Start Command:
 gunicorn core.wsgi
 ```
 
-## 4. Variables de Entorno (opcional)
+## 4. Crear Superuser (Admin)
+
+Una vez desplegada la app, crear un admin desde **Render Dashboard → tu servicio → Shell**:
+
+```shell
+python manage.py createsuperuser
+```
+
+O de forma automática en cada deploy agregando esto al `build.sh`:
+```bash
+echo "from django.contrib.auth.models import User; User.objects.filter(username='admin').exists() or User.objects.create_superuser('admin', 'admin@example.com', 'admin123')" | python manage.py shell
+```
+Esto crea el usuario `admin` / `admin123` solo si no existe.
+
+---
+
+## 5. Variables de Entorno (opcional)
 
 En Render Dashboard → Environment Variables:
 - `DJANGO_SECRET_KEY` → clave secreta para producción (generar con `python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`)
@@ -124,7 +140,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "fallback-dev-only")
 DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 ```
 
-## 5. Resumen de Comandos Render
+## 6. Resumen de Comandos Render
 
 | Acción | Comando |
 |---|---|
@@ -132,7 +148,7 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 | Start | `gunicorn core.wsgi` |
 | Puerto | Render asigna `$PORT` automáticamente |
 
-## 6. Troubleshooting Común
+## 7. Troubleshooting Común
 
 **Error: `No module named 'app'`**
 → El Start Command apunta a `app.wsgi` pero el proyecto se llama distinto. Usar `gunicorn core.wsgi`.
