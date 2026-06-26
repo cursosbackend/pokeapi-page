@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-lcy^zylbsmyi(z_-51e@&z^fgg_p2l+z%4$jxq_p=epcewm^ro
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["pokeapi-page-1.onrender.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["pokeapi-page-3.onrender.com", "localhost", "127.0.0.1"]
 
 
 # Application definition
